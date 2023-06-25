@@ -1,4 +1,4 @@
-# Bearity Capacity and Settlement of Shallow Foundations
+# Bearing Capacity and Settlement of Shallow Foundations
 Produces spread footing design chart using elastic theory method from Bowle's Foundation Analysis and Design, 5th ed.
 
 This code is presently only applicable to computing settlement at the centerpoint of the foundation
