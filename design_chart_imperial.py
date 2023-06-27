@@ -160,6 +160,19 @@ def design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_fi
 # This code is presently only applicable to computing settlement at the centerpoint of the foundation
 
 ''' 
+Settlement is estimated from the following equation:
+
+Settlement:           ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ 𝐼𝑓
+
+ΔH: Immediate settlement
+𝑞:  Intensity of contact pressure in units of Es
+B': Least lateral dimension of contributing base area in units of ΔH
+𝐼𝑠: Influence factor, which depends on L'/B', thickness of stratum H, Poisson's ratio ν
+𝐼𝑓: Influence factor, which depends on embedment depth D
+Es: Elastic settlement modulus
+ν:  Poisson's ratio  
+m:  Number of contributing base areas
+
 Specify the embedment depth and shape parameters:
 '''
 D = 1.5              # foundation depth in feet
@@ -172,7 +185,7 @@ Specify the backfill and foundation parameters:
 gamma_backfill = 125 # unit weight of structural backfill in pcf
 gamma_soil = 120     # unit weight of the foundation soil in pcf
 Z = 50               # depth to hard layer in feet
-phi = 34             # soil friction angle in degrees
+phi = 35             # soil friction angle in degrees
 c = 0                # soil cohesion in psf
 nu = 0.33            # Poisson's ratio
 
@@ -182,7 +195,7 @@ csv file format should contain a row for each layer and have columns named "laye
 The first layer "top" is at the base of the foundation.
 If modulus_file=False, the constant Es value will be used.
 '''
-modulus_file = False
+modulus_file = True
 file = 'layers.csv'
 Es = 800.0           # Constant Settlement Modulus in ksf. 
 
