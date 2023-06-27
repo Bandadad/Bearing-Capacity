@@ -1,4 +1,11 @@
 import math
+'''
+Reference: Fox, E.N., 1948. The mean elastic settlement of a uniformly-loaded area at a depth
+            below the ground surface, Proceedings of the 2nd International Conference, ISSMFE,
+            Rotterdam, Vol. 1, pp. 129-132
+'''
+
+
 # Define a function to calculate the r factors
 def calculate_r_factors(B, L, D):
     r = 2 * D
