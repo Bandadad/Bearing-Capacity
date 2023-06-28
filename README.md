@@ -3,6 +3,13 @@ Produces spread footing design chart using elastic theory method from Bowle's Fo
 
 This code is presently only applicable to computing settlement at the centerpoint of the foundation
 
+Settlement is estimated from the following equation:
+
+Settlement:           ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ 𝐼𝑓
+
+
+Instructions for use:
+In "design_chart_imperial.py":
 Specify the foundation embedment depth, "D", and shape ratio (B/L) as "Shape" for the shallow foundation.
 
 Next, specify the backfill and foundation parameters:
