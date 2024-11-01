@@ -5,6 +5,7 @@ import fox_embedment as fox
 import influence_factor
 import weighted_modulus as _mod 
 import math
+import yaml
 
 
 # Functions
@@ -26,7 +27,7 @@ def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half
 
 def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, I_f_values, D, input_info):
     plt.figure(figsize=(10, 6))
-    plt.plot(B_values, qu_values, color='k', linewidth=2, label='Strength Limit ($\phi$=0.45)')
+    plt.plot(B_values, qu_values, color='k', linewidth=2, label=r'Strength Limit ($\phi$=0.45)')
     plt.plot(B_values, q_values, color='k', linestyle='dashed', label='Service Limit = 1 inch')
     plt.plot(B_values, three_quarter_q_values, color='k', linestyle='dashdot', label='Service Limit = 3/4 inch')
     plt.plot(B_values, half_q_values, color='k', linestyle='dotted', label='Service Limit = 1/2 inch')
@@ -156,50 +157,31 @@ def design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_fi
 
     return output_excel, input_excel
 
+def main():
+    # Load configuration from YAML file with UTF-8 encoding
+    with open('settle_config.yaml', 'r', encoding='utf-8') as file:
+        config = yaml.safe_load(file)
 
-# This code is presently only applicable to computing settlement at the centerpoint of the foundation
+    # Extract parameters from the configuration
+    D = config['settlement_parameters']['D']
+    Shape = config['settlement_parameters']['shape']
 
-''' 
-Settlement is estimated from the following equation:
+    gamma_backfill = config['soil_properties']['gamma_backfill']
+    gamma_soil = config['soil_properties']['gamma_soil']
+    Z = config['soil_properties']['Z']
+    phi = config['soil_properties']['phi']
+    c = config['soil_properties']['c']
+    nu = config['soil_properties']['nu']
 
-Settlement:           ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ 𝐼𝑓
+    modulus_file = config['modulus_options']['modulus_file']
+    file = config['modulus_options']['file']
+    Es = config['modulus_options'].get('Es')
 
-ΔH: Immediate settlement
-𝑞:  Intensity of contact pressure in units of Es
-B': Least lateral dimension of contributing base area in units of ΔH
-𝐼𝑠: Influence factor, which depends on L'/B', thickness of stratum H, Poisson's ratio ν
-𝐼𝑓: Influence factor, which depends on embedment depth D
-Es: Elastic settlement modulus
-ν:  Poisson's ratio  
-m:  Number of contributing base areas
-
-Specify the embedment depth and shape parameters:
-'''
-D = 1.5              # foundation depth in feet
-Shape = 1            # L / B ratio to account for footing shape
-
-''' 
-Specify the backfill and foundation parameters:
-'''
-
-gamma_backfill = 125 # unit weight of structural backfill in pcf
-gamma_soil = 120     # unit weight of the foundation soil in pcf
-Z = 50               # depth to hard layer in feet
-phi = 35             # soil friction angle in degrees
-c = 0                # soil cohesion in psf
-nu = 0.33            # Poisson's ratio
-
-''' 
-If you want to read in a file with layer information, set modulus_file=True.
-csv file format should contain a row for each layer and have columns named "layer_number", "top", "bottom", "modulus"
-The first layer "top" is at the base of the foundation.
-If modulus_file=False, the constant Es value will be used.
-'''
-modulus_file = True
-file = 'layers.csv'
-Es = 800.0           # Constant Settlement Modulus in ksf. 
-
-if __name__ == "__main__":
+    # Run the settlement calculation function with loaded parameters
     output_excel, input_excel = design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_file, file, Es)
+    
     print("\nOutput results saved as:", output_excel)
     print("Input information saved as:", input_excel)
+
+if __name__ == "__main__":
+    main()
