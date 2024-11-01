@@ -9,7 +9,7 @@ Settlement:           ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ �
 
 
 Instructions for use:  
-In "design_chart_imperial.py":
+In "settle_config.yaml", set up the problem you wish to solve:
 
 - Specify the foundation embedment depth, "D", and shape ratio (B/L) as "Shape" for the shallow foundation.
 
@@ -26,3 +26,6 @@ The csv file format should contain a row for each layer and have columns named "
 The first layer "top" is at the base of the foundation.
 
 If modulus_file=False, the constant Es value will be used.
+
+Once the config file is saved, run design_chart_imperial.py.  Input and output files will be saved as .xlsx files and the design chart
+will be save as figure.svg.

@@ -1,4 +1,4 @@
-# YAML configuration file for computing settlement at the centerpoint of the foundation
+# Configuration file for computing bearing capacity and settlement for shallow foundations
 # This code is presently only applicable to computing settlement at the centerpoint of the foundation
 
 #Settlement is estimated from the following equation:
@@ -34,6 +34,6 @@ soil_properties:
 # If modulus_file=False, the constant Es value will be used.
 
 modulus_options:
-  modulus_file: true       # Set to true to read layer information from a file
+  modulus_file: False       # Set to True to read layer information from a file
   file: 'layers.csv'       # Path to CSV file containing layer information
-  Es: None                 # Constant Settlement Modulus in ksf (used if modulus_file is false)
+  Es: 800             # Constant Settlement Modulus in ksf (used if modulus_file is false)
