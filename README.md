@@ -1,8 +1,6 @@
 # Bearing Capacity and Settlement of Shallow Foundations
 Produces spread footing design chart using elastic theory method from Bowle's Foundation Analysis and Design, 5th ed.
 
-This code is presently only applicable to computing settlement at the centerpoint of the foundation
-
 Settlement is estimated from the following equation:
 
 Settlement:           ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ 𝐼𝑓

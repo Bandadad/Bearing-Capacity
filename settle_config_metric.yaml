@@ -1,5 +1,4 @@
 # Configuration file for computing bearing capacity and settlement for shallow foundations
-# This code is presently only applicable to computing settlement at the centerpoint of the foundation
 
 # Settlement is estimated from the following equation:
 
