@@ -36,7 +36,7 @@ def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values,
     plt.ylabel('Factored Net Bearing Resistance (ksf)', fontsize=14, weight='bold')
     plt.xlim(0, 20)
     plt.ylim(0, 12)
-    details_text = f"Footing Depth: {D} m\nL/D Ratio: {Shape}\nCalculation Location: {settlement_location.capitalize()}"
+    details_text = f"Footing Depth: {D} ft\nL/D Ratio: {Shape}\nCalculation Location: {settlement_location.capitalize()}"
     plt.annotate(details_text, xy=(0.5, 1.02), xycoords='axes fraction', ha='center', fontsize=10, bbox=dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor="white"))
     plt.legend(loc='upper right', fontsize=10, framealpha=1)
     plt.grid(which='both', linestyle='dashed', alpha=0.75)
