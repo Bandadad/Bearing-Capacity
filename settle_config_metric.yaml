@@ -1,0 +1,39 @@
+# Configuration file for computing bearing capacity and settlement for shallow foundations
+# This code is presently only applicable to computing settlement at the centerpoint of the foundation
+
+# Settlement is estimated from the following equation:
+
+# Settlement:           ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ 𝐼𝑓
+
+# ΔH: Immediate settlement
+# 𝑞:  Intensity of contact pressure in units of Es
+# B': Least lateral dimension of contributing base area in units of ΔH
+# 𝐼𝑠: Influence factor, which depends on L'/B', thickness of stratum H, Poisson's ratio ν
+# 𝐼𝑓: Influence factor, which depends on embedment depth D
+# Es: Elastic settlement modulus
+# ν:  Poisson's ratio  
+# m:  Number of contributing base areas
+
+# Specify the embedment depth and shape parameters:
+settlement_parameters:
+  D: 2.3                   # Foundation depth in meters
+  shape: 1                 # L / B ratio to account for footing shape
+
+# Specify the backfill and foundation parameters:
+soil_properties:
+  gamma_backfill: 19.5     # Unit weight of structural backfill in kN/m³
+  gamma_soil: 19.0         # Unit weight of the foundation soil in kN/m³
+  Z: 30                    # Depth to hard layer in meters
+  phi: 20                  # Soil friction angle in degrees
+  c: 0                     # Soil cohesion in kPa
+  nu: 0.25                 # Poisson's ratio
+
+# If you want to read in a file with layer information, set modulus_file=True.
+# csv file format should contain a row for each layer and have columns named "layer_number", "top", "bottom", "modulus"
+# The first layer "top" is at the base of the foundation.
+# If modulus_file=False, the constant Es value will be used.
+
+modulus_options:
+  modulus_file: True      # Set to True to read layer information from a file
+  file: 'Steppe_Design_metric.csv'        # Path to CSV file containing layer information
+  Es: 25000                 # Constant Settlement Modulus in kPa (used if modulus_file is false)
