@@ -9,7 +9,8 @@ Settlement:           ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ �
 Instructions for use:  
 In "settle_config.yaml", set up the problem you wish to solve:
 
-- Specify the foundation embedment depth, "D", and shape ratio (B/L) as "Shape" for the shallow foundation.
+- Specify the foundation embedment depth, "D", the shape ratio (B/L) as "Shape" for the shallow foundation, and the location of the settlement
+calculation: center, edge, or corner.
 
 - Next, specify the backfill and foundation parameters:
     - gamma_backfill = unit weight of structural backfill in pcf
@@ -26,4 +27,4 @@ The first layer "top" is at the base of the foundation.
 If modulus_file=False, the constant Es value will be used.
 
 Once the config file is saved, run design_chart_imperial.py.  Input and output files will be saved as .xlsx files and the design chart
-will be save as figure.svg.
+will be save as figure.png.

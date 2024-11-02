@@ -43,7 +43,7 @@ def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values,
     plt.xticks(np.arange(0, 22, 2))
     plt.yticks(np.arange(0, 14, 2))
     plt.tick_params(axis='both', labelsize=14)
-    plt.savefig("figure.svg", dpi=1200, format='svg', bbox_inches='tight')
+    plt.savefig("figure.png", dpi=1200, format='png', bbox_inches='tight')
     plt.show()
 
     df = create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half_q_values,
