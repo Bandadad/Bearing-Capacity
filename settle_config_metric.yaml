@@ -35,5 +35,5 @@ soil_properties:
 
 modulus_options:
   modulus_file: True      # Set to True to read layer information from a file
-  file: 'Steppe_Design_metric.csv'        # Path to CSV file containing layer information
+  file: 'layers_metric.csv'        # Path to CSV file containing layer information
   Es: 25000                 # Constant Settlement Modulus in kPa (used if modulus_file is false)
