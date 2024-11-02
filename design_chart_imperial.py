@@ -25,18 +25,19 @@ def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half
     return df
 
 
-def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, I_f_values, D, input_info):
+def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, I_f_values, D, input_info, Shape, settlement_location):
     plt.figure(figsize=(10, 6))
     plt.plot(B_values, qu_values, color='k', linewidth=2, label=r'Strength Limit ($\phi$=0.45)')
     plt.plot(B_values, q_values, color='k', linestyle='dashed', label='Service Limit = 1 inch')
     plt.plot(B_values, three_quarter_q_values, color='k', linestyle='dashdot', label='Service Limit = 3/4 inch')
     plt.plot(B_values, half_q_values, color='k', linestyle='dotted', label='Service Limit = 1/2 inch')
     plt.plot(B_values, quarter_q_values, color='k', linestyle=(0, (3, 5, 1, 5, 1, 5)), label='Service Limit = 1/4 inch')
-    plt.xlabel('Footing Width (ft)', fontsize=14)
-    plt.ylabel('Factored Net Bearing Resistance (ksf)', fontsize=14)
+    plt.xlabel('Footing Width (ft)', fontsize=14, weight='bold')
+    plt.ylabel('Factored Net Bearing Resistance (ksf)', fontsize=14, weight='bold')
     plt.xlim(0, 20)
     plt.ylim(0, 12)
-    plt.title(f'Design Chart for Footing Depth={D} ft', fontsize=16)
+    details_text = f"Footing Depth: {D} m\nL/D Ratio: {Shape}\nCalculation Location: {settlement_location.capitalize()}"
+    plt.annotate(details_text, xy=(0.5, 1.02), xycoords='axes fraction', ha='center', fontsize=10, bbox=dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor="white"))
     plt.legend(loc='upper right', fontsize=10, framealpha=1)
     plt.grid(which='both', linestyle='dashed', alpha=0.75)
     plt.xticks(np.arange(0, 22, 2))
@@ -102,7 +103,7 @@ def calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c):
     return qu * 0.45 / 1000
 
 
-def design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_file=False, file=None, Es=None):
+def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, modulus_file=False, file=None, Es=None):
     # Initialize arrays
     B_values = np.arange(0.25, 41, 0.25)  # foundation width in feet
     q_values = []
@@ -116,8 +117,18 @@ def design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_fi
 
     for B in B_values:
         L = Shape * B # This can be changed to a constant if L is a set dimension
+        if m == 4:
+            B_prime = B / 2
+            L_prime = L / 2
+        elif m == 2:
+            B_prime = B / 2
+            L_prime = L
+        else:
+            B_prime = B 
+            L_prime = L
+
         H = min(Z, 5 * B)
-        I_s = influence_factor.calculate_Is(B, L, H, nu)
+        I_s = influence_factor.calculate_Is(B_prime, L_prime, H, nu)
         I_f = fox.fox_factor(B, L, D, nu)
         # Append values to respective lists
         I_s_values.append(I_s)
@@ -129,7 +140,7 @@ def design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_fi
         if B == 0:
             q_values.append(0)  # To avoid division by zero
         else:
-            q = (1/12) / ((B / 2) * ((1 - nu ** 2) / modulus) * 4 * I_s * I_f)
+            q = (1/12) / (B_prime * ((1 - nu ** 2) / modulus) * m * I_s * I_f)
             q_values.append(q)
             three_quarter_q_values.append(q * 0.75)
             half_q_values.append(q * 0.5)
@@ -141,6 +152,7 @@ def design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_fi
         'Z': Z,
         'D': D,
         'Shape': Shape,
+        'Settlement_location': settlement_location,
         'gamma_soil': gamma_soil,
         'gamma_backfill': gamma_backfill,
         'phi': phi,
@@ -153,18 +165,19 @@ def design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_fi
    # Call the plot_and_save_results function
     output_excel, input_excel = plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values,
                                                       quarter_q_values, modulus_values, I_s_values, I_f_values, D,
-                                                      input_info)
+                                                      input_info, Shape, settlement_location)
 
     return output_excel, input_excel
 
 def main():
     # Load configuration from YAML file with UTF-8 encoding
-    with open('settle_config.yaml', 'r', encoding='utf-8') as file:
+    with open('settle_config_imperial.yaml', 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     # Extract parameters from the configuration
     D = config['settlement_parameters']['D']
     Shape = config['settlement_parameters']['shape']
+    settlement_location = config['settlement_parameters'].get('settlement_location', 'center')
 
     gamma_backfill = config['soil_properties']['gamma_backfill']
     gamma_soil = config['soil_properties']['gamma_soil']
@@ -177,8 +190,17 @@ def main():
     file = config['modulus_options']['file']
     Es = config['modulus_options'].get('Es')
 
+    if settlement_location == 'center':
+        m = 4
+    elif settlement_location == 'edge':
+        m = 2
+    elif settlement_location == 'corner':
+        m = 1
+    else:
+        raise ValueError("Invalid settlement location specified in the configuration file.")
+
     # Run the settlement calculation function with loaded parameters
-    output_excel, input_excel = design_chart(Z, D, Shape, gamma_soil, gamma_backfill, phi, c, nu, modulus_file, file, Es)
+    output_excel, input_excel = design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, modulus_file, file, Es)
     
     print("\nOutput results saved as:", output_excel)
     print("Input information saved as:", input_excel)

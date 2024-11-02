@@ -16,8 +16,9 @@
 
 # Specify the embedment depth and shape parameters:
 settlement_parameters:
-  D: 2.3                   # Foundation depth in meters
-  shape: 1                 # L / B ratio to account for footing shape
+  D: 2.3                        # Foundation depth in meters
+  shape: 1                      # L / B ratio to account for footing shape
+  settlement_location: center   # Options: center, edge, corner
 
 # Specify the backfill and foundation parameters:
 soil_properties:
@@ -34,6 +35,6 @@ soil_properties:
 # If modulus_file=False, the constant Es value will be used.
 
 modulus_options:
-  modulus_file: True      # Set to True to read layer information from a file
-  file: 'layers_metric.csv'        # Path to CSV file containing layer information
-  Es: 25000                 # Constant Settlement Modulus in kPa (used if modulus_file is false)
+  modulus_file: True                # Set to True to read layer information from a file
+  file: 'layers_metric.csv'         # Path to CSV file containing layer information
+  Es: None                          # Constant Settlement Modulus in kPa (used if modulus_file is false)

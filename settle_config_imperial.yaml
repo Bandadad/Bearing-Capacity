@@ -16,17 +16,18 @@
 
 # Specify the embedment depth and shape parameters:
 settlement_parameters:
-  D: 1.5                   # Foundation depth in feet
-  shape: 1                 # L / B ratio to account for footing shape
+  D: 7.62                       # Foundation depth in feet
+  shape: 1                      # L / B ratio to account for footing shape
+  settlement_location: edge   # Options: center, edge, corner
 
 # Specify the backfill and foundation parameters:
 soil_properties:
   gamma_backfill: 125      # Unit weight of structural backfill in pcf
-  gamma_soil: 120          # Unit weight of the foundation soil in pcf
+  gamma_soil: 122          # Unit weight of the foundation soil in pcf
   Z: 50                    # Depth to hard layer in feet
-  phi: 35                  # Soil friction angle in degrees
+  phi: 20                 # Soil friction angle in degrees
   c: 0                     # Soil cohesion in psf
-  nu: 0.33                 # Poisson's ratio
+  nu: 0.25                 # Poisson's ratio
 
 # If you want to read in a file with layer information, set modulus_file=True.
 # csv file format should contain a row for each layer and have columns named "layer_number", "top", "bottom", "modulus"
@@ -34,6 +35,6 @@ soil_properties:
 # If modulus_file=False, the constant Es value will be used.
 
 modulus_options:
-  modulus_file: False       # Set to True to read layer information from a file
-  file: 'layers.csv'       # Path to CSV file containing layer information
-  Es: 800             # Constant Settlement Modulus in ksf (used if modulus_file is false)
+  modulus_file: True        # Set to True to read layer information from a file
+  file: 'layers.csv'        # Path to CSV file containing layer information
+  Es: None              # Constant Settlement Modulus in ksf (used if modulus_file is false)

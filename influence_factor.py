@@ -2,9 +2,7 @@ import math
 import numpy as np
 
 
-def calculate_I1(B, L, H):
-    L_prime = L / 2
-    B_prime = B / 2
+def calculate_I1(B_prime, L_prime, H):
     M = L_prime / B_prime
     N = H / B_prime
     C1 = (1 + math.sqrt(M**2 + 1)) * math.sqrt(M**2 + N**2)
@@ -16,9 +14,7 @@ def calculate_I1(B, L, H):
     return I1
 
 
-def calculate_I2(B, L, H):
-    L_prime = L / 2
-    B_prime = B / 2
+def calculate_I2(B_prime, L_prime, H):
     M = L_prime / B_prime
     N = H / B_prime
     C1 = N  / ( 2 * math.pi)
@@ -28,9 +24,9 @@ def calculate_I2(B, L, H):
     return I2
 
 
-def calculate_Is(B, L, H, nu):
-    I1 = calculate_I1(B, L, H)
-    I2 = calculate_I2(B, L, H)
+def calculate_Is(B_prime, L_prime, H, nu):
+    I1 = calculate_I1(B_prime, L_prime, H)
+    I2 = calculate_I2(B_prime, L_prime, H)
     Is = I1 + ((1-2*nu)/(1-nu)) * I2
 
     return Is
