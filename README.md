@@ -6,9 +6,7 @@ This project produces a design chart for spread footing using elastic theory, ba
 
 Settlement is estimated from the equation:
 
-\[
 ΔH = (q * B' * (1 - ν²) / Es) * m * Is * If
-\]
 
 ### Project Structure
 
