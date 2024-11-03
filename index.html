@@ -7,7 +7,68 @@
     <meta name="google-site-verification" content="GgRAZpxizdtfux5SufKXgOXl7LKL53XgKxphwI3q9NU" />
 </head>
 <body>
-    <p>Site verification has been added to the head section.</p>
+    <h1>Bearing Capacity and Settlement of Shallow Foundations</h1>
+    <p>This project produces a design chart for spread footing using elastic theory, based on Bowles' <em>Foundation Analysis and Design</em>, 5th Edition.</p>
+    
+    <h3>Settlement Calculation</h3>
+    <p>Settlement is estimated from the equation:</p>
+    <p>ΔH = (q * B' * (1 - ν²) / Es) * m * Is * If</p>
+    
+    <h3>Project Structure</h3>
+    <p>The repository includes two main Python scripts for generating design charts:</p>
+    <ul>
+        <li><code>design_chart_imperial.py</code>: Uses imperial units (feet, pounds).</li>
+        <li><code>design_chart_metric.py</code>: Uses metric units (meters, kilograms).</li>
+    </ul>
+    <p>Each script loads configuration parameters from a corresponding YAML file (<code>settle_config_imperial.yaml</code> or <code>settle_config_metric.yaml</code>).</p>
+    
+    <h3>Configuration Files</h3>
+    <p>The YAML configuration file allows customization of the parameters used in settlement and bearing capacity calculations. The parameters are grouped as follows:</p>
+    <ol>
+        <li><strong>Settlement Parameters:</strong>
+            <ul>
+                <li><code>D</code>: Embedment depth of the foundation.</li>
+                <li><code>shape</code>: Aspect ratio of the footing, given as \( B/L \).</li>
+                <li><code>settlement_location</code>: Location for calculating settlement (<code>center</code>, <code>edge</code>, or <code>corner</code>).</li>
+            </ul>
+        </li>
+        <li><strong>Soil Properties:</strong>
+            <ul>
+                <li><code>gamma_backfill</code>: Unit weight of structural backfill (imperial: pcf, metric: kN/m³).</li>
+                <li><code>gamma_soil</code>: Unit weight of foundation soil.</li>
+                <li><code>Z</code>: Depth to the hard layer.</li>
+                <li><code>phi</code>: Friction angle of the foundation soil (degrees).</li>
+                <li><code>c</code>: Cohesion of the foundation soil (imperial: psf, metric: kPa).</li>
+                <li><code>nu</code>: Poisson's ratio of the foundation soil.</li>
+            </ul>
+        </li>
+        <li><strong>Modulus Options:</strong>
+            <ul>
+                <li><code>modulus_file</code>: Set to <code>True</code> if modulus values vary by layer and are provided in a separate file.</li>
+                <li><code>file</code>: Path to a CSV file with layer information, required if <code>modulus_file</code> is <code>True</code>. This file should have columns <code>layer_number</code>, <code>top</code>, <code>bottom</code>, and <code>modulus</code>.</li>
+                <li><code>Es</code>: Optional constant modulus value if <code>modulus_file</code> is <code>False</code>.</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h3>Running the Code</h3>
+    <ol>
+        <li>Set the desired parameters in the YAML configuration file.</li>
+        <li>Run the desired script:
+            <ul>
+                <li>For imperial units: <code>python design_chart_imperial.py</code></li>
+                <li>For metric units: <code>python design_chart_metric.py</code></li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h3>Outputs</h3>
+    <p>Each script generates the following output files:</p>
+    <ul>
+        <li><code>figure.png</code>: A plot of the bearing resistance vs. footing width.</li>
+        <li><code>output_results.xlsx</code>: An Excel file containing calculated results, including footing width, bearing resistance, modulus, and influence factors.</li>
+        <li><code>input_information.xlsx</code>: An Excel file with input values used in the calculations.</li>
+    </ul>
 </body>
 </html>
 
