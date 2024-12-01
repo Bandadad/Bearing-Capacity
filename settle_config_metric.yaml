@@ -32,8 +32,12 @@ soil_properties:
 # csv file format should contain a row for each layer and have columns named "layer_number", "top", "bottom", "modulus"
 # The first layer "top" is at the base of the foundation.
 # If modulus_file=False, the constant Es value will be used.
-
 modulus_options:
   modulus_file: True                # Set to True to read layer information from a file
   file: 'layers_metric.csv'         # Path to CSV file containing layer information
   Es: None                          # Constant Settlement Modulus in kPa (used if modulus_file is false)
+
+# plot_options controls the x and y axis of the design chart.
+plot_options:
+  max_footing_width: 20 # Maximum foundation width for plotting in meters
+  max_bearing_pressure: 600 # Units of Es

@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6,6 +7,7 @@ import influence_factor
 import weighted_modulus as _mod 
 import math
 import yaml
+import argparse
 
 
 # Functions
@@ -25,7 +27,8 @@ def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half
     return df
 
 
-def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, I_f_values, D, input_info, Shape, settlement_location):
+def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, 
+                          I_f_values, D, input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure):
     plt.figure(figsize=(10, 6))
     plt.plot(B_values, qu_values, color='k', linewidth=2, label=r'Strength Limit ($\phi$=0.45)')
     plt.plot(B_values, q_values, color='k', linestyle='dashed', label='Service Limit = 1 inch')
@@ -34,14 +37,14 @@ def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values,
     plt.plot(B_values, quarter_q_values, color='k', linestyle=(0, (3, 5, 1, 5, 1, 5)), label='Service Limit = 1/4 inch')
     plt.xlabel('Footing Width (ft)', fontsize=14, weight='bold')
     plt.ylabel('Factored Net Bearing Resistance (ksf)', fontsize=14, weight='bold')
-    plt.xlim(0, 20)
-    plt.ylim(0, 12)
+    plt.xlim(0, max_footing_width)
+    plt.ylim(0, max_bearing_pressure)
     details_text = f"Footing Depth: {D} ft\nL/D Ratio: {Shape}\nCalculation Location: {settlement_location.capitalize()}"
     plt.annotate(details_text, xy=(0.5, 1.02), xycoords='axes fraction', ha='center', fontsize=10, bbox=dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor="white"))
     plt.legend(loc='upper right', fontsize=10, framealpha=1)
     plt.grid(which='both', linestyle='dashed', alpha=0.75)
-    plt.xticks(np.arange(0, 22, 2))
-    plt.yticks(np.arange(0, 14, 2))
+    plt.xticks(np.arange(0, max_footing_width + 2, 2))
+    plt.yticks(np.arange(0, max_bearing_pressure + 2, 2))
     plt.tick_params(axis='both', labelsize=14)
     plt.savefig("figure.png", dpi=1200, format='png', bbox_inches='tight')
     plt.show()
@@ -103,9 +106,10 @@ def calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c):
     return qu * 0.45 / 1000
 
 
-def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, modulus_file=False, file=None, Es=None):
+def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, max_footing_width, max_bearing_pressure, 
+                 modulus_file=False, file=None, Es=None):
     # Initialize arrays
-    B_values = np.arange(0.25, 41, 0.25)  # foundation width in feet
+    B_values = np.arange(0.25, max_footing_width + 0.25, 0.25)  # foundation width in feet
     q_values = []
     qu_values = []
     three_quarter_q_values = []
@@ -165,13 +169,25 @@ def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill
    # Call the plot_and_save_results function
     output_excel, input_excel = plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values,
                                                       quarter_q_values, modulus_values, I_s_values, I_f_values, D,
-                                                      input_info, Shape, settlement_location)
+                                                      input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure)
 
     return output_excel, input_excel
 
 def main():
-    # Load configuration from YAML file with UTF-8 encoding
-    with open('settle_config_imperial.yaml', 'r', encoding='utf-8') as file:
+    parser = argparse.ArgumentParser(description="Run with a specified configuration file.")
+    parser.add_argument("config_file", type=str, help="Path to the configuration YAML file (extension optional).")
+    args = parser.parse_args()
+
+    # Ensure the config file has the .yaml extension
+    config_file = args.config_file
+    if not config_file.endswith(".yaml"):
+        config_file += ".yaml"
+
+    if not os.path.isfile(config_file):
+        raise FileNotFoundError(f"Configuration file '{config_file}' not found.")
+
+    # Load the configuration file with UTF-8 encoding
+    with open(config_file, 'r',  encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
     # Extract parameters from the configuration
@@ -190,6 +206,9 @@ def main():
     file = config['modulus_options']['file']
     Es = config['modulus_options'].get('Es')
 
+    max_footing_width = config['plot_options']['max_footing_width']
+    max_bearing_pressure = config['plot_options']['max_bearing_pressure']
+
     if settlement_location == 'center':
         m = 4
     elif settlement_location == 'edge':
@@ -200,7 +219,8 @@ def main():
         raise ValueError("Invalid settlement location specified in the configuration file.")
 
     # Run the settlement calculation function with loaded parameters
-    output_excel, input_excel = design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, modulus_file, file, Es)
+    output_excel, input_excel = design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, 
+                                             max_footing_width, max_bearing_pressure, modulus_file, file, Es)
     
     print("\nOutput results saved as:", output_excel)
     print("Input information saved as:", input_excel)

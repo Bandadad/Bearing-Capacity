@@ -15,9 +15,9 @@
 
 # Specify the embedment depth and shape parameters:
 settlement_parameters:
-  D: 7.62                       # Foundation depth in feet
+  D: 1.5                       # Foundation depth in feet
   shape: 1                      # L / B ratio to account for footing shape
-  settlement_location: edge   # Options: center, edge, corner
+  settlement_location: center   # Options: center, edge, corner
 
 # Specify the backfill and foundation parameters:
 soil_properties:
@@ -37,3 +37,8 @@ modulus_options:
   modulus_file: True        # Set to True to read layer information from a file
   file: 'layers.csv'        # Path to CSV file containing layer information
   Es: None              # Constant Settlement Modulus in ksf (used if modulus_file is false)
+
+# plot_options controls the x and y axis of the design chart.
+plot_options:
+  max_footing_width: 40 # Maximum foundation width for plotting in feet
+  max_bearing_pressure: 5 # Units of Es  
