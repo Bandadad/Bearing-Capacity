@@ -15,7 +15,7 @@
 
 # Specify the embedment depth and shape parameters:
 settlement_parameters:
-  D: 1.5                       # Foundation depth in feet
+  D: 1.5                        # Foundation depth in feet
   shape: 1                      # L / B ratio to account for footing shape
   settlement_location: center   # Options: center, edge, corner
 
@@ -24,7 +24,7 @@ soil_properties:
   gamma_backfill: 125      # Unit weight of structural backfill in pcf
   gamma_soil: 122          # Unit weight of the foundation soil in pcf
   Z: 50                    # Depth to hard layer in feet
-  phi: 20                 # Soil friction angle in degrees
+  phi: 20                  # Soil friction angle in degrees
   c: 0                     # Soil cohesion in psf
   nu: 0.25                 # Poisson's ratio
 
@@ -32,13 +32,12 @@ soil_properties:
 # csv file format should contain a row for each layer and have columns named "layer_number", "top", "bottom", "modulus"
 # The first layer "top" is at the base of the foundation.
 # If modulus_file=False, the constant Es value will be used.
-
 modulus_options:
   modulus_file: True        # Set to True to read layer information from a file
   file: 'layers.csv'        # Path to CSV file containing layer information
-  Es: None              # Constant Settlement Modulus in ksf (used if modulus_file is false)
+  Es: None                  # Constant Settlement Modulus in ksf (used if modulus_file is false)
 
 # plot_options controls the x and y axis of the design chart.
 plot_options:
-  max_footing_width: 40 # Maximum foundation width for plotting in feet
-  max_bearing_pressure: 5 # Units of Es  
+  max_footing_width: 40     # Maximum foundation width for plotting in feet
+  max_bearing_pressure: 5   # Units of Es  

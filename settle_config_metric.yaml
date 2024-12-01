@@ -39,5 +39,5 @@ modulus_options:
 
 # plot_options controls the x and y axis of the design chart.
 plot_options:
-  max_footing_width: 20 # Maximum foundation width for plotting in meters
-  max_bearing_pressure: 600 # Units of Es
+  max_footing_width: 20             # Maximum foundation width for plotting in meters
+  max_bearing_pressure: 600         # Units of Es
