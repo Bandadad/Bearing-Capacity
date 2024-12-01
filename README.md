@@ -38,13 +38,17 @@ The YAML configuration file allows customization of the parameters used in settl
    - `modulus_file`: Set to `True` if modulus values vary by layer and are provided in a separate file.
    - `file`: Path to a CSV file with layer information, required if `modulus_file` is `True`. This file should have columns `layer_number`, `top`, `bottom`, and `modulus`.
    - `Es`: Optional constant modulus value if `modulus_file` is `False`.
+   
+3. **Plot Options**:
+   - `max_footing_width`: Set to the maximum footing width to be plotted on the design chart.
+   - `max_bearing_pressure`: Set to the maximum bearing pressure to be plotted on the design chart.
 
 ### Running the Code
 
 1. Set the desired parameters in the YAML configuration file.
-2. Run the desired script:
-   - For imperial units: `python design_chart_imperial.py`
-   - For metric units: `python design_chart_metric.py`
+2. Run the desired script using the name of the config file (.yaml tag optional):
+   - For imperial units: `python design_chart_imperial.py  settle_config_imperial`
+   - For metric units: `python design_chart_metric.py settle_config_metric`
 
 ### Outputs
 
