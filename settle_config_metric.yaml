@@ -41,3 +41,5 @@ modulus_options:
 plot_options:
   max_footing_width: 20             # Maximum foundation width for plotting in meters
   max_bearing_pressure: 600         # Units of Es
+  X_ticks: 4                        # Major tick interval on x-axis
+  Y_ticks: 50                       # Major tick interval on y-axis

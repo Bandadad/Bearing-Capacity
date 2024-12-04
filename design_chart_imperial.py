@@ -28,7 +28,7 @@ def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half
 
 
 def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, 
-                          I_f_values, D, input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure):
+                          I_f_values, D, input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks):
     plt.figure(figsize=(10, 6))
     plt.plot(B_values, qu_values, color='k', linewidth=2, label=r'Strength Limit ($\phi$=0.45)')
     plt.plot(B_values, q_values, color='k', linestyle='dashed', label='Service Limit = 1 inch')
@@ -42,10 +42,12 @@ def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values,
     details_text = f"Footing Depth: {D} ft\nL/D Ratio: {Shape}\nCalculation Location: {settlement_location.capitalize()}"
     plt.annotate(details_text, xy=(0.5, 1.02), xycoords='axes fraction', ha='center', fontsize=10, bbox=dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor="white"))
     plt.legend(loc='upper right', fontsize=10, framealpha=1)
-    plt.grid(which='both', linestyle='dashed', alpha=0.75)
-    plt.xticks(np.arange(0, max_footing_width + 2, 2))
-    plt.yticks(np.arange(0, max_bearing_pressure + 2, 2))
-    plt.tick_params(axis='both', labelsize=14)
+    plt.grid(which='major', linestyle='dashed', alpha=0.75)
+    plt.xticks(np.arange(0, max_footing_width + x_ticks, x_ticks))
+    plt.yticks(np.arange(0, max_bearing_pressure + y_ticks, y_ticks))
+    plt.tick_params(axis='both', labelsize=14, which='both', length=4)
+    plt.minorticks_on()
+    #plt.gca().yaxis.set_minor_locator(plt.MultipleLocator(0.2))
     plt.savefig("figure.png", dpi=1200, format='png', bbox_inches='tight')
     plt.show()
 
@@ -107,7 +109,7 @@ def calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c):
 
 
 def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, max_footing_width, max_bearing_pressure, 
-                 modulus_file=False, file=None, Es=None):
+                 x_ticks, y_ticks, modulus_file=False, file=None, Es=None):
     # Initialize arrays
     B_values = np.arange(0.25, max_footing_width + 0.25, 0.25)  # foundation width in feet
     q_values = []
@@ -169,7 +171,7 @@ def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill
    # Call the plot_and_save_results function
     output_excel, input_excel = plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values,
                                                       quarter_q_values, modulus_values, I_s_values, I_f_values, D,
-                                                      input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure)
+                                                      input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks)
 
     return output_excel, input_excel
 
@@ -208,6 +210,8 @@ def main():
 
     max_footing_width = config['plot_options']['max_footing_width']
     max_bearing_pressure = config['plot_options']['max_bearing_pressure']
+    x_ticks = config['plot_options']['X_ticks']
+    y_ticks = config['plot_options']['Y_ticks']
 
     if settlement_location == 'center':
         m = 4
@@ -220,7 +224,7 @@ def main():
 
     # Run the settlement calculation function with loaded parameters
     output_excel, input_excel = design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, 
-                                             max_footing_width, max_bearing_pressure, modulus_file, file, Es)
+                                             max_footing_width, max_bearing_pressure, x_ticks, y_ticks, modulus_file, file, Es)
     
     print("\nOutput results saved as:", output_excel)
     print("Input information saved as:", input_excel)

@@ -40,4 +40,6 @@ modulus_options:
 # plot_options controls the x and y axis of the design chart.
 plot_options:
   max_footing_width: 40     # Maximum foundation width for plotting in feet
-  max_bearing_pressure: 5   # Units of Es  
+  max_bearing_pressure: 6   # Units of Es  
+  X_ticks: 5                # Major tick interval on x-axis
+  Y_ticks: 1                # Major tick interval on y-axis
