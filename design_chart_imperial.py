@@ -28,9 +28,9 @@ def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half
 
 
 def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, 
-                          I_f_values, D, input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks):
+                          I_f_values, D, input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor):
     plt.figure(figsize=(10, 6))
-    plt.plot(B_values, qu_values, color='k', linewidth=2, label=r'Strength Limit ($\phi$=0.45)')
+    plt.plot(B_values, qu_values, color='k', linewidth=2, label=rf'Strength Limit ($\phi$={r_factor})')
     plt.plot(B_values, q_values, color='k', linestyle='dashed', label='Service Limit = 1 inch')
     plt.plot(B_values, three_quarter_q_values, color='k', linestyle='dashdot', label='Service Limit = 3/4 inch')
     plt.plot(B_values, half_q_values, color='k', linestyle='dotted', label='Service Limit = 1/2 inch')
@@ -100,16 +100,16 @@ def calculate_depth_factors(D, B, phi):
     return Dc, Dq, Dg
 
 
-def calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c):
+def calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c, r_factor):
     Nc, Nq, Ng = calculate_factors(phi)
     Sc, Sq, Sg = calculate_shape_factors(B, L, phi, Nq, Nc)
     Dc, Dq, Dg = calculate_depth_factors(D, B, phi)
     qu = c * Nc * Sc * Dc + gamma_backfill * D * Nq * Sq * Dq + 0.5 * gamma_soil * B * Ng * Sg * Dg
-    return qu * 0.45 / 1000
+    return qu * r_factor / 1000
 
 
 def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, max_footing_width, max_bearing_pressure, 
-                 x_ticks, y_ticks, modulus_file=False, file=None, Es=None):
+                 x_ticks, y_ticks, r_factor, modulus_file=False, file=None, Es=None):
     # Initialize arrays
     B_values = np.arange(0.25, max_footing_width + 0.25, 0.25)  # foundation width in feet
     q_values = []
@@ -140,7 +140,7 @@ def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill
         I_s_values.append(I_s)
         I_f_values.append(I_f)
 
-        qu = calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c)
+        qu = calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c, r_factor)
         modulus = _mod.compute_weighted_average(file, H) if modulus_file else Es
         modulus_values.append(modulus)
         if B == 0:
@@ -171,7 +171,7 @@ def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill
    # Call the plot_and_save_results function
     output_excel, input_excel = plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values,
                                                       quarter_q_values, modulus_values, I_s_values, I_f_values, D,
-                                                      input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks)
+                                                      input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor)
 
     return output_excel, input_excel
 
@@ -196,6 +196,7 @@ def main():
     D = config['settlement_parameters']['D']
     Shape = config['settlement_parameters']['shape']
     settlement_location = config['settlement_parameters'].get('settlement_location', 'center')
+    r_factor = config['settlement_parameters']['resistance_factor']
 
     gamma_backfill = config['soil_properties']['gamma_backfill']
     gamma_soil = config['soil_properties']['gamma_soil']
@@ -224,7 +225,7 @@ def main():
 
     # Run the settlement calculation function with loaded parameters
     output_excel, input_excel = design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, 
-                                             max_footing_width, max_bearing_pressure, x_ticks, y_ticks, modulus_file, file, Es)
+                                             max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor, modulus_file, file, Es)
     
     print("\nOutput results saved as:", output_excel)
     print("Input information saved as:", input_excel)
