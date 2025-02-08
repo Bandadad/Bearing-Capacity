@@ -6,8 +6,8 @@ import fox_embedment as fox
 import influence_factor
 import weighted_modulus as _mod 
 import math
-import yaml
-import argparse
+import tkinter as tk
+from tkinter import ttk, messagebox
 
 
 # Functions
@@ -169,66 +169,116 @@ def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill
         'Es': Es
     }
    # Call the plot_and_save_results function
-    output_excel, input_excel = plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values,
-                                                      quarter_q_values, modulus_values, I_s_values, I_f_values, D,
-                                                      input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor)
-
-    return output_excel, input_excel
-
-def main():
-    parser = argparse.ArgumentParser(description="Run with a specified configuration file.")
-    parser.add_argument("config_file", type=str, help="Path to the configuration YAML file (extension optional).")
-    args = parser.parse_args()
-
-    # Ensure the config file has the .yaml extension
-    config_file = args.config_file
-    if not config_file.endswith(".yaml"):
-        config_file += ".yaml"
-
-    if not os.path.isfile(config_file):
-        raise FileNotFoundError(f"Configuration file '{config_file}' not found.")
-
-    # Load the configuration file with UTF-8 encoding
-    with open(config_file, 'r',  encoding='utf-8') as file:
-        config = yaml.safe_load(file)
-
-    # Extract parameters from the configuration
-    D = config['settlement_parameters']['D']
-    Shape = config['settlement_parameters']['shape']
-    settlement_location = config['settlement_parameters'].get('settlement_location', 'center')
-    r_factor = config['settlement_parameters']['resistance_factor']
-
-    gamma_backfill = config['soil_properties']['gamma_backfill']
-    gamma_soil = config['soil_properties']['gamma_soil']
-    Z = config['soil_properties']['Z']
-    phi = config['soil_properties']['phi']
-    c = config['soil_properties']['c']
-    nu = config['soil_properties']['nu']
-
-    modulus_file = config['modulus_options']['modulus_file']
-    file = config['modulus_options']['file']
-    Es = config['modulus_options'].get('Es')
-
-    max_footing_width = config['plot_options']['max_footing_width']
-    max_bearing_pressure = config['plot_options']['max_bearing_pressure']
-    x_ticks = config['plot_options']['X_ticks']
-    y_ticks = config['plot_options']['Y_ticks']
-
-    if settlement_location == 'center':
-        m = 4
-    elif settlement_location == 'edge':
-        m = 2
-    elif settlement_location == 'corner':
-        m = 1
-    else:
-        raise ValueError("Invalid settlement location specified in the configuration file.")
-
-    # Run the settlement calculation function with loaded parameters
-    output_excel, input_excel = design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, 
-                                             max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor, modulus_file, file, Es)
+    output_excel, input_excel = plot_and_save_results(
+        B_values, qu_values, q_values, three_quarter_q_values, half_q_values,
+        quarter_q_values, modulus_values, I_s_values, I_f_values,
+        D, input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure,
+        x_ticks, y_ticks, r_factor
+    )
     
     print("\nOutput results saved as:", output_excel)
     print("Input information saved as:", input_excel)
+    return output_excel, input_excel
+
+# ======================
+# TKINTER GUI CODE
+# ======================
+
+import tkinter as tk
+from tkinter import ttk, messagebox
+
+class DesignChartApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Spread Footing Design Chart - US Customary Units")
+        self.root.iconbitmap("footing.ico")        
+        self.inputs = {}
+        self.create_widgets()
+
+    def create_widgets(self):
+        sections = {
+            "Settlement Parameters": [
+                ("Foundation Depth (ft):", "D"),
+                ("Shape (L/B ratio):", "Shape"),
+                ("Settlement Location (center/edge/corner):", "settlement_location"),
+                ("Resistance Factor (For ASD, use 1 / FoS):", "r_factor")
+            ],
+            "Soil Properties": [
+                ("Unit Weight of Backfill (pcf):", "gamma_backfill"),
+                ("Unit Weight of Foundation Soil (pcf):", "gamma_soil"),
+                ("Depth to Hard Layer (ft):", "Z"),
+                ("Soil Friction Angle (degrees):", "phi"),
+                ("Soil Cohesion (psf):", "c"),
+                ("Poisson's Ratio:", "nu")
+            ],
+            "Modulus Options": [
+                ("Use Modulus File (True/False):", "modulus_file"),
+                ("Modulus File Name (if used):", "file"),
+                ("Settlement Modulus (ksf, None if no file):", "Es")
+            ],
+            "Plot Options": [
+                ("Max X-Axis Footing Width (ft):", "max_footing_width"),
+                ("Max Y-Axis Bearing Pressure (ksf):", "max_bearing_pressure"),
+                ("X-axis Tick Interval:", "x_ticks"),
+                ("Y-axis Tick Interval:", "y_ticks")
+            ]
+        }
+
+        row = 0
+        for section, fields in sections.items():
+            frame = ttk.LabelFrame(self.root, text=section, padding=10)
+            frame.grid(row=row, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+            for i, (text, var) in enumerate(fields):
+                label = tk.Label(frame, text=text, anchor="e", width=35)
+                label.grid(row=i, column=0, padx=5, pady=2, sticky="e")
+                entry = tk.Entry(frame, width=20)
+                entry.grid(row=i, column=1, padx=5, pady=2, sticky="w")
+                self.inputs[var] = entry
+            row += 1
+
+        submit_btn = tk.Button(self.root, text="Generate Chart", command=self.process_inputs)
+        submit_btn.grid(row=row, column=0, columnspan=2, pady=10)
+
+    def process_inputs(self):
+        try:
+            # Gather and convert inputs from the GUI entries
+            D = float(self.inputs["D"].get())
+            Shape = float(self.inputs["Shape"].get())
+            settlement_location = self.inputs["settlement_location"].get().lower()
+            r_factor = float(self.inputs["r_factor"].get())
+            gamma_backfill = float(self.inputs["gamma_backfill"].get())
+            gamma_soil = float(self.inputs["gamma_soil"].get())
+            Z = float(self.inputs["Z"].get())
+            phi = float(self.inputs["phi"].get())
+            c = float(self.inputs["c"].get())
+            nu = float(self.inputs["nu"].get())
+            max_footing_width = float(self.inputs["max_footing_width"].get())
+            max_bearing_pressure = float(self.inputs["max_bearing_pressure"].get())
+            x_ticks = float(self.inputs["x_ticks"].get())
+            y_ticks = float(self.inputs["y_ticks"].get())
+            modulus_file = self.inputs["modulus_file"].get().strip().lower() == "true"
+            file = self.inputs["file"].get() if modulus_file else None
+            Es = float(self.inputs["Es"].get()) if not modulus_file else None
+            
+            # Map settlement location to m value
+            if settlement_location == 'center':
+                m = 4
+            elif settlement_location == 'edge':
+                m = 2
+            elif settlement_location == 'corner':
+                m = 1
+            else:
+                raise ValueError("Invalid settlement location. Choose 'center', 'edge', or 'corner'.")
+            
+            # Call the original design_chart function
+            design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, 
+                         max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor, modulus_file, file, Es)
+            messagebox.showinfo("Success", "Design Chart Generated Successfully")
+        except Exception as e:
+            messagebox.showerror("Input Error", str(e))
 
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    app = DesignChartApp(root)
+    root.mainloop()
+
