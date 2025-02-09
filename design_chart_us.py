@@ -37,7 +37,6 @@ def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half
     df = pd.DataFrame(data)
     return df
 
-
 def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, 
                           I_f_values, D, input_info, Shape, settlement_location, max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor):
     plt.figure(figsize=(10, 6))
@@ -82,7 +81,6 @@ def plot_and_save_results(B_values, qu_values, q_values, three_quarter_q_values,
 
     return output_excel, input_excel
 
-
 def calculate_factors(phi):
     rad_phi = math.radians(phi)
     Nq = math.exp(math.pi * math.tan(rad_phi)) * (math.tan(math.pi / 4 + rad_phi / 2)) ** 2
@@ -90,14 +88,12 @@ def calculate_factors(phi):
     Ng = 2 * (Nq + 1) * math.tan(rad_phi)
     return Nc, Nq, Ng
 
-
 def calculate_shape_factors(B, L, phi, Nq, Nc):
     rad_phi = math.radians(phi)
     Sc = 1 + (Nq / Nc) * (B / L)
     Sq = 1 + (B / L) * math.tan(rad_phi)
     Sg = max(0.6, 1 - 0.4 * (B / L))
     return Sc, Sq, Sg 
-
 
 def calculate_depth_factors(D, B, phi):
     rad_phi = math.radians(phi)
@@ -110,14 +106,12 @@ def calculate_depth_factors(D, B, phi):
     Dg = 1
     return Dc, Dq, Dg
 
-
 def calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c, r_factor):
     Nc, Nq, Ng = calculate_factors(phi)
     Sc, Sq, Sg = calculate_shape_factors(B, L, phi, Nq, Nc)
     Dc, Dq, Dg = calculate_depth_factors(D, B, phi)
     qu = c * Nc * Sc * Dc + gamma_backfill * D * Nq * Sq * Dq + 0.5 * gamma_soil * B * Ng * Sg * Dg
     return qu * r_factor / 1000
-
 
 def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, max_footing_width, max_bearing_pressure, 
                  x_ticks, y_ticks, r_factor, modulus_file=False, file=None, Es=None):
