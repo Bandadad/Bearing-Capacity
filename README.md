@@ -12,15 +12,15 @@ Settlement is estimated from the equation:
 
 The repository includes the following Python scripts:
 
-- `design_chart_imperial.py`: Generates design charts in imperial units (feet, pounds).
+- `design_chart_us.py`: Generates design charts in US customary units (feet, pounds).
 - `design_chart_metric.py`: Generates design charts in metric units (meters, kilograms).
 - `fox_embedment.py`: Calculates embedment factors using Fox's method.
 - `influence_factor.py`: Computes influence factors for settlement calculations.
 - `weighted_modulus.py`: Calculates weighted modulus based on soil layers.
 
-### Configuration Files
+### Graphical User Interface
 
-The YAML configuration file allows customization of the parameters used in settlement and bearing capacity calculations. The parameters are grouped as follows:
+The GUI allows customization of the parameters used in settlement and bearing capacity calculations. The parameters are grouped as follows:
 
 1. **Settlement Parameters**:
 
@@ -62,7 +62,7 @@ The project requires the following Python libraries:
 - `numpy`
 - `pandas`
 - `matplotlib`
-- `pyyaml`
+- `tkinter`
 
 You can install them using:
 
@@ -70,22 +70,7 @@ You can install them using:
 pip install -r requirements.txt
 ```
 
-### Running the Code
-
-1. Set the desired parameters in the YAML configuration file.
-2. Run the script with the name of the configuration file (.yaml extension optional):
-
-   **Imperial Units**:
-   ```bash
-   python design_chart_imperial.py <config_file>
-   ```
-   **Metric Units**:
-   ```bash
-   python design_chart_metric.py <config_file>
-   ```
-   Replace `<config_file>` with the name of your YAML configuration file, e.g., `settle_config_imperial` or `settle_config_metric`.
-
-### Outputs
+### Program Outputs
 
 Each script generates the following output files:
 
@@ -95,6 +80,6 @@ Each script generates the following output files:
 
 ### Additional Notes
 
-- Ensure the CSV file for modulus values follows the specified structure if `modulus_file` is set to `True`.
+- Ensure the CSV file for modulus values follows the specified structure if `modulus_file` is set to `True`. The csv file format should contain a row for each layer and contain columns named "layer_number", "top", "bottom", "modulus". The first layer "top" is at the base of the foundation, not necessarily the ground surface.
 - The `fox_embedment.py` and `influence_factor.py` modules provide essential calculations for settlement and embedment factors, respectively. Do not modify them unless necessary.
-- Separate configuration files are provided for imperial (`settle_config_imperial.yaml`) and metric (`settle_config_metric.yaml`) units. Ensure you use the appropriate script and configuration file based on your system of measurement.
+
