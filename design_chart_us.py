@@ -1,4 +1,5 @@
 import os
+import sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,6 +12,16 @@ from tkinter import ttk, messagebox
 
 
 # Functions
+def resource_path(relative_path):
+    """ Get the absolute path to a resource"""
+    try:
+        # PyInstaller creates a temporary folder and stores path in _MEIPASS.
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, I_f_values):
     data = {
         'B (ft)': B_values,
@@ -191,7 +202,7 @@ class DesignChartApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Spread Footing Design Chart - US Customary Units")
-        self.root.iconbitmap("footing.ico")        
+        self.root.iconbitmap(resource_path("footing.ico"))       
         self.inputs = {}
         self.create_widgets()
 
