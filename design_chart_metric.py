@@ -22,7 +22,6 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-
 def create_dataframe(B_values, qu_values, q_values, three_quarter_q_values, half_q_values, quarter_q_values, modulus_values, I_s_values, I_f_values):
     data = {
         'B (m)': B_values,
