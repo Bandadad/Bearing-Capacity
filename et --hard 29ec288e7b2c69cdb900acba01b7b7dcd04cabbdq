@@ -1,0 +1,300 @@
+[33mcommit 57a07ea99092344dbbb3b9ca5e6690b3de0762e3[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 17:32:59 2025 -0700
+
+    add .exe to gitignore
+
+[33mcommit 302c47e0e1147f1c37b640b05dba0b6ba08d0ebb[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 17:24:50 2025 -0700
+
+    removed .exe from cache
+
+[33mcommit 324885d0d1264632f36909506aeb7e93abd5d8c6[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 17:22:15 2025 -0700
+
+    add .exe to gitignore
+
+[33mcommit f54fa1d4c8cbd0f4412e3deea10e6ad58b6191fa[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 17:19:05 2025 -0700
+
+    push executable files
+
+[33mcommit 29ec288e7b2c69cdb900acba01b7b7dcd04cabbd[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 17:14:12 2025 -0700
+
+    rename settle_config_us
+
+[33mcommit 49cf2b3a7626ff60b609e1e2e76158d86080a005[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 17:05:48 2025 -0700
+
+    added .ico handling
+
+[33mcommit cb68e5cffa14c258d8e89952dcafb211a4201925[m[33m ([m[1;32mgui_apps[m[33m)[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 16:49:08 2025 -0700
+
+    gui for metric version
+
+[33mcommit a6aa14701ab454718c0debd555ecbc2cf00d7be3[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Feb 8 16:17:05 2025 -0700
+
+    change imperial to us gui
+
+[33mcommit 5fd098d5065d96ec9b9e87cad236610a31d0359a[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Tue Dec 31 14:48:34 2024 -0700
+
+    updates to README
+
+[33mcommit b1504841409ed604104b216aeaea5143ff18a7c5[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Tue Dec 31 14:31:56 2024 -0700
+
+    add a requirements file
+
+[33mcommit 154a851f2aa6fd0ef71adf494a7d25206fe2c773[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Fri Dec 20 17:23:17 2024 -0700
+
+    add variable resistance factor
+
+[33mcommit 70a069c07e938f5b649c28efc39d3ae9df273e09[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Tue Dec 3 20:09:53 2024 -0700
+
+    Add interval control to axes
+
+[33mcommit a338680bc0f4eae76675a563d754582f724b5a5f[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Dec 1 12:55:26 2024 -0700
+
+    clean up config file formatting
+
+[33mcommit d419d9255b520ac3bc2dce210bf85a1dbf848c7b[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Dec 1 12:51:24 2024 -0700
+
+    update README with plot options
+
+[33mcommit 0db35062fe1624a13db9c3072020b6eeb8497120[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Dec 1 12:46:01 2024 -0700
+
+    Add chart axes to config
+
+[33mcommit 798e0f8ba1028872dbc1f2005b76a3da9aaed490[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 24 17:25:54 2024 -0700
+
+    update html to include link
+
+[33mcommit aa3c6278aa572ea00f282fecc4d2831d49c5d0a7[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 11:03:24 2024 -0700
+
+    add REAME to html
+
+[33mcommit e4503279e8e6581d9217a74a41a5ede83a34be75[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 10:54:18 2024 -0700
+
+    update html tag
+
+[33mcommit dd08875f98622aa7b3a79a7b9c328353e14c4571[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 10:43:37 2024 -0700
+
+    fixed meta tag
+
+[33mcommit 956c948f1c635eb0159dfd0e677e71e2747f261d[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 10:40:47 2024 -0700
+
+    add index.html
+
+[33mcommit b5bb16a6d10d6221294c3935ea5d070d6802e590[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 10:34:32 2024 -0700
+
+    google html
+
+[33mcommit 57f5e2f18fe4ecbe86dfb991c02f4b6508d13a57[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 09:21:34 2024 -0700
+
+    remove bracket in equation in README
+
+[33mcommit 7a59fe75458407ea9c36bc84984faf5f9a8abf8b[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 09:19:51 2024 -0700
+
+    fix equation in README
+
+[33mcommit b24b2e06af626d0f38e15cfa95389870deab5a8d[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sun Nov 3 09:16:30 2024 -0700
+
+    Bring README up to date
+
+[33mcommit f1530c5a8d002ca45f85ae7ff4974b8ccf858ca5[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Nov 2 09:08:11 2024 -0700
+
+    Fix typo in imperial figure
+
+[33mcommit 08062f0641cbd54a7110681a546eb3b0d20a8463[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Nov 2 09:05:49 2024 -0700
+
+    Change .svg to .png
+
+[33mcommit 11ecc5fdf51dfcc8d30b349ae5d2376837989103[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Nov 2 09:03:07 2024 -0700
+
+    Remove limitations text regarding center
+
+[33mcommit 5d5b063ab19f423b418eed365dcbab55753339b8[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Sat Nov 2 09:01:33 2024 -0700
+
+    Add edge and corner capability
+
+[33mcommit 7bd6306bc9f2e2d88720d77ab6c5b1d8de417dc7[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Fri Nov 1 17:30:13 2024 -0700
+
+    Add .csv to .gitignore
+
+[33mcommit dbb34e3260c3f5d33a81cfd6017d70547530fd58[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Fri Nov 1 17:28:38 2024 -0700
+
+    Added example layers_metric.csv
+
+[33mcommit e6c4b7bc234e21ecfba84b380a59b7cbab5a099c[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Fri Nov 1 17:25:33 2024 -0700
+
+    Added metric version
+
+[33mcommit 524bb3444c1a242c39420ccf319ffae4afcea8ab[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Fri Nov 1 17:10:00 2024 -0700
+
+    rename settle_config
+
+[33mcommit c2bae05c94a4c2f9e54d1158c277b6af075d1c54[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Thu Oct 31 19:24:19 2024 -0700
+
+    fix spacing in config comments
+
+[33mcommit c3b4cd8b260d21ef63786c50d24c82969cfecc64[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Thu Oct 31 19:20:36 2024 -0700
+
+    Update README for the new format
+
+[33mcommit 8d9ed3596baefc5333450ce64e60aa4fd9422bb9[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Thu Oct 31 19:12:29 2024 -0700
+
+    Change input to a config file
+
+[33mcommit 8afe0e61b7a85467bffeb3e53ead62803dfc86e1[m
+Author: Bandadad <mlpegnam@gmail.com>
+Date:   Thu Oct 31 18:50:17 2024 -0700
+
+    add .gitignore
+
+[33mcommit ac8bf248da87cb4b65d771afcb80ed813be97e5c[m
+Author: Mike Pegnam <81060083+Bandadad@users.noreply.github.com>
+Date:   Sun Sep 22 10:09:26 2024 -0700
+
+    Update LICENSE
+
+[33mcommit 12a0e4b5b8b70b539d643bc360aff8b5184ee27c[m
+Author: Mike Pegnam <81060083+Bandadad@users.noreply.github.com>
+Date:   Sun Sep 22 10:08:36 2024 -0700
+
+    Create LICENSE
+
+[33mcommit db8415fd34a203be9ecb714d73421582be2dc76d[m
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Thu Jun 29 20:03:26 2023 -0700
+
+    Markdown edits to README
+
+[33mcommit ef7697fc644e7ed3ecdad8b16f996644568ed519[m
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Tue Jun 27 18:30:39 2023 -0700
+
+    Add equation to README
+
+[33mcommit 6cb569f5f38e9085d5718f9b79b49f6219a0b7f1[m
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Mon Jun 26 20:31:02 2023 -0700
+
+    Add settlement equation to the annotation
+
+[33mcommit 0c5ed0752947e20482c565b74386102ab436566f[m
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Mon Jun 26 18:09:20 2023 -0700
+
+    Add citation to fox_embedment.py
+
+[33mcommit 08414373ac19ceb2982d012abf10431a1fd60317[m
+Author: Mike Pegnam <81060083+Bandadad@users.noreply.github.com>
+Date:   Sun Jun 25 11:20:45 2023 -0700
+
+    Update README.md
+
+[33mcommit 20f5cd610619da132d8b5618e2bd2c78f608cfb5[m
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Sun Jun 25 11:17:39 2023 -0700
+
+    Renamed main file
+
+[33mcommit eb0efda8c2e3a9348b4e4998359ccf6144b87180[m
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Sun Jun 25 11:16:04 2023 -0700
+
+    Renamed design_chart_imperial_v2.py
+
+[33mcommit 9466edd0a913f6115fb303966da132582d28bf7e[m
+Author: Mike Pegnam <81060083+Bandadad@users.noreply.github.com>
+Date:   Sun Jun 25 10:49:48 2023 -0700
+
+    Update README.md
+
+[33mcommit 260ef44d6a5b3775c4b7ca229399cee28065359b[m
+Author: Mike Pegnam <81060083+Bandadad@users.noreply.github.com>
+Date:   Sun Jun 25 10:48:23 2023 -0700
+
+    Update README.md
+
+[33mcommit 04ec3a60fb176530067691310bb7529f54082ece[m
+Merge: 828d780 a6ac611
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Sun Jun 25 10:42:30 2023 -0700
+
+    Merge branch 'main' of github.com:Bandadad/Bearity-Capacity
+
+[33mcommit a6ac611bff613349a0b268161b3649d62d468c2d[m
+Author: Mike Pegnam <81060083+Bandadad@users.noreply.github.com>
+Date:   Sun Jun 25 10:34:42 2023 -0700
+
+    Initial commit
+
+[33mcommit 828d780834fb3ab1e29fded086f81b7a079e0d0d[m
+Author: Michael Pegnam <mlpegnam@gmail.com>
+Date:   Sun Jun 25 10:33:22 2023 -0700
+
+    Initial Commit
