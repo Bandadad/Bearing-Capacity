@@ -31,11 +31,11 @@ The GUI allows customization of the parameters used in settlement and bearing ca
 
 2. **Soil Properties**:
 
-   - `gamma_backfill`: Unit weight of structural backfill (imperial: pcf, metric: kN/m³).
-   - `gamma_soil`: Unit weight of foundation soil (imperial: pcf, metric: kN/m³).
-   - `Z`: Depth to the hard layer (imperial: ft, metric: m).
+   - `gamma_backfill`: Unit weight of structural backfill (US customary: pcf, metric: kN/m³).
+   - `gamma_soil`: Unit weight of foundation soil (US customary: pcf, metric: kN/m³).
+   - `Z`: Depth to the hard layer (US customary: ft, metric: m).
    - `phi`: Friction angle of the foundation soil (degrees).
-   - `c`: Cohesion of the foundation soil (imperial: psf, metric: kPa).
+   - `c`: Cohesion of the foundation soil (US customary: psf, metric: kPa).
    - `nu`: Poisson's ratio of the foundation soil.
 
 3. **Modulus Options**:
@@ -50,8 +50,8 @@ The GUI allows customization of the parameters used in settlement and bearing ca
 
 4. **Plot Options**:
 
-   - `max_footing_width`: Set to the maximum footing width to be plotted on the design chart (imperial: ft, metric: m).
-   - `max_bearing_pressure`: Set to the maximum bearing pressure to be plotted on the design chart (imperial: ksf, metric: kPa).
+   - `max_footing_width`: Set to the maximum footing width to be plotted on the design chart (US customary: ft, metric: m).
+   - `max_bearing_pressure`: Set to the maximum bearing pressure to be plotted on the design chart (US customary: ksf, metric: kPa).
    - `X_ticks`: Interval for major ticks on the x-axis.
    - `Y_ticks`: Interval for major ticks on the y-axis.
 
