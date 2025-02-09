@@ -9,14 +9,14 @@ Settlement is estimated from the equation:
 ΔH = 𝑞 ⋅ B'⋅ (1-ν²)/Es ⋅ m ⋅ 𝐼𝑠 ⋅ 𝐼𝑓
 
 where:
-- **ΔH** - Immediate settlement  
-- **𝑞** - Intensity of contact pressure in units of Es  
-- **B'** - Least lateral dimension of contributing base area in units of ΔH  
-- **𝐼𝑠** - Influence factor, which depends on L'/B', thickness of stratum H, Poisson's ratio ν  
-- **𝐼𝑓** - Influence factor, which depends on embedment depth D  
-- **Es** - Elastic settlement modulus  
-- **ν** - Poisson's ratio  
-- **m** - Number of contributing base areas  
+- **ΔH** - Immediate settlement    
+- **𝑞** - Intensity of contact pressure in units of Es    
+- **B'** - Least lateral dimension of contributing base area in units of ΔH    
+- **𝐼𝑠** - Influence factor, which depends on L'/B', thickness of stratum H, Poisson's ratio ν    
+- **𝐼𝑓** - Influence factor, which depends on embedment depth D    
+- **Es** - Elastic settlement modulus    
+- **ν** - Poisson's ratio    
+- **m** - Number of contributing base areas    
 
 
 ### Project Structure
