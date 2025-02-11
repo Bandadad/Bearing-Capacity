@@ -81,6 +81,12 @@ You can install them using:
 pip install -r requirements.txt
 ```
 
+The graphical user interface can be built with PyInstaller like this for the metric version:
+
+```bash
+pyinstaller --onefile --windowed --icon=footing.ico --add-data "footing.ico;." design_chart_metric.py
+```
+
 ### Program Outputs
 
 Each script generates the following output files:
