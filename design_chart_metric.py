@@ -217,7 +217,7 @@ class DesignChartApp:
             "Modulus Options": [
                 ("Use Modulus File (True/False):", "modulus_file"),
                 ("Modulus File Name (if used):", "file"),
-                ("Settlement Modulus (kPa, None if no file):", "Es")
+                ("Settlement Modulus (kPa, None if 'File' is True):", "Es")
             ],
             "Plot Options": [
                 ("Max X-Axis Footing Width (m):", "max_footing_width"),
