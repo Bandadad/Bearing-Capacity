@@ -194,7 +194,7 @@ class DesignChartApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Spread Footing Design Chart - Metric Units")
-        self.root.iconbitmap(resource_path("footing.ico"))     
+        self.root.iconbitmap(resource_path("footing.ico"))
         self.inputs = {}
         self.create_widgets()
 
@@ -232,7 +232,7 @@ class DesignChartApp:
             frame = ttk.LabelFrame(self.root, text=section, padding=10)
             frame.grid(row=row, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
             for i, (text, var) in enumerate(fields):
-                label = tk.Label(frame, text=text, anchor="e", width=35)
+                label = tk.Label(frame, text=text, anchor="e", width=50)
                 label.grid(row=i, column=0, padx=5, pady=2, sticky="e")
                 entry = tk.Entry(frame, width=20)
                 entry.grid(row=i, column=1, padx=5, pady=2, sticky="w")
@@ -243,26 +243,82 @@ class DesignChartApp:
         submit_btn.grid(row=row, column=0, columnspan=2, pady=10)
 
     def process_inputs(self):
+        for key, entry in self.inputs.items():
+            modulus_file_input = self.inputs["modulus_file"].get().strip().lower()
+
+            if key == "Es" and modulus_file_input == "true":
+                continue  # Skip checking Es if a modulus file is being used
+            if key == "file" and modulus_file_input == "false":
+                continue  # Skip checking file if modulus_file is false
+
+            if entry.get().strip() == "":
+                messagebox.showwarning("Missing Input", f"Please fill out all fields before generating the plot.")
+                return
         try:
             # Gather and convert inputs from the GUI entries
             D = float(self.inputs["D"].get())
+            if D < 0:
+                messagebox.showerror("Input Error", "Foundation Depth must be non-negative.")
+                return
             Shape = float(self.inputs["Shape"].get())
+            if Shape < 0:
+                messagebox.showerror("Input Error", "Shape (L/B ratio) must be non-negative.")
+                return
             settlement_location = self.inputs["settlement_location"].get().lower()
+            if settlement_location not in ['center', 'edge', 'corner']:
+                messagebox.showerror("Input Error", "Invalid settlement location. Choose 'center', 'edge', or 'corner'.")
+                return              
             r_factor = float(self.inputs["r_factor"].get())
+            if r_factor < 0:
+                messagebox.showerror("Input Error", "Resistance Factor must be non-negative.")
+                return
             gamma_backfill = float(self.inputs["gamma_backfill"].get())
+            if gamma_backfill < 0:
+                messagebox.showerror("Input Error", "Backfill unit weight must be non-negative.")
+                return
             gamma_soil = float(self.inputs["gamma_soil"].get())
+            if gamma_soil < 0:
+                messagebox.showerror("Input Error", "Soil unit weight must be non-negative.")
+                return
             Z = float(self.inputs["Z"].get())
+            if Z < 0:
+                messagebox.showerror("Input Error", "Depth to hard layer must be non-negative.")
+                return
             phi = float(self.inputs["phi"].get())
+            if not (0 <= phi <= 45):
+                messagebox.showerror("Input Error", "Soil Friction Angle must be between 0 and 45 degrees.")
+                return
             c = float(self.inputs["c"].get())
+            if c < 0:
+                messagebox.showerror("Input Error", "Soil cohesion must be non-negative.")
+                return
             nu = float(self.inputs["nu"].get())
+            if nu < 0:
+                messagebox.showerror("Input Error", "Poisson's ratio must be non-negative.")
+                return
             max_footing_width = float(self.inputs["max_footing_width"].get())
+            if max_footing_width < 0:
+                messagebox.showerror("Input Error", "Max footing width must be non-negative.")
+                return            
             max_bearing_pressure = float(self.inputs["max_bearing_pressure"].get())
+            if max_bearing_pressure < 0:
+                messagebox.showerror("Input Error", "Max bearing pressure must be non-negative.")
+                return  
             x_ticks = float(self.inputs["x_ticks"].get())
+            if x_ticks < 0:
+                messagebox.showerror("Input Error", "Please enter a positive value")
+                return  
             y_ticks = float(self.inputs["y_ticks"].get())
-            modulus_file = self.inputs["modulus_file"].get().strip().lower() == "true"
-            file = self.inputs["file"].get() if modulus_file else None
+            if y_ticks < 0:
+                messagebox.showerror("Input Error", "Please enter a positive value")
+                return  
+            modulus_file = modulus_file_input == "true"
+            file = self.inputs["file"].get().strip() if modulus_file else None
+            if modulus_file and not file:
+                messagebox.showerror("Input Error", "Please provide a file name when using a modulus file.")
+                return
             Es = float(self.inputs["Es"].get()) if not modulus_file else None
-            
+
             # Map settlement location to m value
             if settlement_location == 'center':
                 m = 4
@@ -277,6 +333,8 @@ class DesignChartApp:
             design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, 
                          max_footing_width, max_bearing_pressure, x_ticks, y_ticks, r_factor, modulus_file, file, Es)
             messagebox.showinfo("Success", "Design Chart Generated Successfully")
+        except ValueError:
+            messagebox.showerror("Input Error", "Please enter a numeric value")
         except Exception as e:
             messagebox.showerror("Input Error", str(e))
 
