@@ -110,7 +110,14 @@ def calculate_bearing_capacity(B, D, L, gamma_soil, gamma_backfill, phi, c, r_fa
     Nc, Nq, Ng = calculate_factors(phi)
     Sc, Sq, Sg = calculate_shape_factors(B, L, phi, Nq, Nc)
     Dc, Dq, Dg = calculate_depth_factors(D, B, phi)
-    qu = c * Nc * Sc * Dc + gamma_backfill * D * Nq * Sq * Dq + 0.5 * gamma_soil * B * Ng * Sg * Dg
+    qu_gross = (
+        c * Nc * Sc * Dc
+        + gamma_backfill * D * Nq * Sq * Dq
+        + 0.5 * gamma_soil * B * Ng * Sg * Dg
+    )
+    # Net ultimate = gross ultimate − surcharge at foundation level
+    q_surcharge = gamma_backfill * D
+    qnet_ult = qu_gross - q_surcharge
     return qu * r_factor / 1000
 
 def design_chart(Z, D, Shape, settlement_location, m, gamma_soil, gamma_backfill, phi, c, nu, max_footing_width, max_bearing_pressure, 
