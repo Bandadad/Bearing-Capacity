@@ -3,3 +3,5 @@
 *.png
 *.csv
 *.exe
+*.pyc
+__pycache__/

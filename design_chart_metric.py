@@ -241,7 +241,7 @@ class DesignChartApp:
             for i, (text, var) in enumerate(fields):
                 label = tk.Label(frame, text=text, anchor="e", width=50)
                 label.grid(row=i, column=0, padx=5, pady=2, sticky="e")
-                entry = tk.Entry(frame, width=20)
+                entry = tk.Entry(frame, width=10)
                 entry.grid(row=i, column=1, padx=5, pady=2, sticky="w")
                 self.inputs[var] = entry
             row += 1
